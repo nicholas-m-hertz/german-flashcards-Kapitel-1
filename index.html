@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>German Articles & Plurals Practice</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const GermanCombinedFlashcards = () => {
+            const [words] = useState([
+                { german: 'Frau', article: 'die', plural: 'die Frauen', english: 'woman/women', gender: 'feminine', ending: '-en' },
+                { german: 'Freund', article: 'der', plural: 'die Freunde', english: 'friend (male)/friends', gender: 'masculine', ending: '-e' },
+                { german: 'Freundin', article: 'die', plural: 'die Freundinnen', english: 'friend (female)/friends', gender: 'feminine', ending: '-nen' },
+                { german: 'Junge', article: 'der', plural: 'die Jungen', english: 'boy/boys', gender: 'masculine', ending: '-n' },
+                { german: 'Mädchen', article: 'das', plural: 'die Mädchen', english: 'girl/girls', gender: 'neuter', ending: '-' },
+                { german: 'Mann', article: 'der', plural: 'die Männer', english: 'man/men', gender: 'masculine', ending: '-¨er' },
+                { german: 'Bibliothek', article: 'die', plural: 'die Bibliotheken', english: 'library/libraries', gender: 'feminine', ending: '-en' },
+                { german: 'Blatt Papier', article: 'das', plural: 'die Blätter Papier', english: 'sheet/sheets of paper', gender: 'neuter', ending: '-¨er' },
+                { german: 'Bleistift', article: 'der', plural: 'die Bleistifte', english: 'pencil/pencils', gender: 'masculine', ending: '-e' },
+                { german: 'Buch', article: 'das', plural: 'die Bücher', english: 'book/books', gender: 'neuter', ending: '-¨er' },
+                { german: 'Computer', article: 'der', plural: 'die Computer', english: 'computer/computers', gender: 'masculine', ending: '-' },
+                { german: 'Ergebnis', article: 'das', plural: 'die Ergebnisse', english: 'result/results', gender: 'neuter', ending: '-se' },
+                { german: 'Fenster', article: 'das', plural: 'die Fenster', english: 'window/windows', gender: 'neuter', ending: '-' },
+                { german: 'Foto', article: 'das', plural: 'die Fotos', english: 'photo/photos', gender: 'neuter', ending: '-s' },
+                { german: 'Frage', article: 'die', plural: 'die Fragen', english: 'question/questions', gender: 'feminine', ending: '-n' },
+                { german: 'Hausaufgabe', article: 'die', plural: 'die Hausaufgaben', english: 'homework/homework assignments', gender: 'feminine', ending: '-n' },
+                { german: 'Heft', article: 'das', plural: 'die Hefte', english: 'notebook/notebooks', gender: 'neuter', ending: '-e' },
+                { german: 'Kalender', article: 'der', plural: 'die Kalender', english: 'calendar/calendars', gender: 'masculine', ending: '-' },
+                { german: 'Karte', article: 'die', plural: 'die Karten', english: 'map/maps', gender: 'feminine', ending: '-n' },
+                { german: 'Klasse', article: 'die', plural: 'die Klassen', english: 'class/classes', gender: 'feminine', ending: '-n' },
+                { german: 'Klassenkamerad', article: 'der', plural: 'die Klassenkameraden', english: 'classmate (male)/classmates', gender: 'masculine', ending: '-en' },
+                { german: 'Klassenkameradin', article: 'die', plural: 'die Klassenkameradinnen', english: 'classmate (female)/classmates', gender: 'feminine', ending: '-nen' },
+                { german: 'Klassenzimmer', article: 'das', plural: 'die Klassenzimmer', english: 'classroom/classrooms', gender: 'neuter', ending: '-' },
+                { german: 'Kommilitone', article: 'der', plural: 'die Kommilitonen', english: 'university classmate (male)/classmates', gender: 'masculine', ending: '-n' },
+                { german: 'Kommilitonin', article: 'die', plural: 'die Kommilitoninnen', english: 'university classmate (female)/classmates', gender: 'feminine', ending: '-nen' },
+                { german: 'Kuli', article: 'der', plural: 'die Kulis', english: 'ball-point pen/pens', gender: 'masculine', ending: '-s' },
+                { german: 'Lehrbuch', article: 'das', plural: 'die Lehrbücher', english: 'textbook/textbooks', gender: 'neuter', ending: '-¨er' },
+                { german: 'Lehrer', article: 'der', plural: 'die Lehrer', english: 'teacher (male)/teachers', gender: 'masculine', ending: '-' },
+                { german: 'Lehrerin', article: 'die', plural: 'die Lehrerinnen', english: 'teacher (female)/teachers', gender: 'feminine', ending: '-nen' },
+                { german: 'Mensa', article: 'die', plural: 'die Mensen', english: 'cafeteria/cafeterias', gender: 'feminine', ending: '-en' },
+                { german: 'Note', article: 'die', plural: 'die Noten', english: 'grade/grades', gender: 'feminine', ending: '-n' },
+                { german: 'Notiz', article: 'die', plural: 'die Notizen', english: 'note/notes', gender: 'feminine', ending: '-en' },
+                { german: 'Papierkorb', article: 'der', plural: 'die Papierkörbe', english: 'wastebasket/wastebaskets', gender: 'masculine', ending: '-¨e' },
+                { german: 'Problem', article: 'das', plural: 'die Probleme', english: 'problem/problems', gender: 'neuter', ending: '-e' },
+                { german: 'Professor', article: 'der', plural: 'die Professoren', english: 'professor (male)/professors', gender: 'masculine', ending: '-en' },
+                { german: 'Professorin', article: 'die', plural: 'die Professorinnen', english: 'professor (female)/professors', gender: 'feminine', ending: '-nen' },
+                { german: 'Prüfung', article: 'die', plural: 'die Prüfungen', english: 'test/tests', gender: 'feminine', ending: '-en' },
+                { german: 'Radiergummi', article: 'der', plural: 'die Radiergummis', english: 'eraser/erasers', gender: 'masculine', ending: '-s' },
+                { german: 'Rucksack', article: 'der', plural: 'die Rucksäcke', english: 'backpack/backpacks', gender: 'masculine', ending: '-¨e' },
+                { german: 'Sache', article: 'die', plural: 'die Sachen', english: 'thing/things', gender: 'feminine', ending: '-n' },
+                { german: 'Schreibtisch', article: 'der', plural: 'die Schreibtische', english: 'desk/desks', gender: 'masculine', ending: '-e' },
+                { german: 'Schulbuch', article: 'das', plural: 'die Schulbücher', english: 'textbook/textbooks', gender: 'neuter', ending: '-¨er' },
+                { german: 'Schule', article: 'die', plural: 'die Schulen', english: 'school/schools', gender: 'feminine', ending: '-n' },
+                { german: 'Schüler', article: 'der', plural: 'die Schüler', english: 'student (male)/students', gender: 'masculine', ending: '-' },
+                { german: 'Schülerin', article: 'die', plural: 'die Schülerinnen', english: 'student (female)/students', gender: 'feminine', ending: '-nen' },
+                { german: 'Stift', article: 'der', plural: 'die Stifte', english: 'pen/pens', gender: 'masculine', ending: '-e' },
+                { german: 'Student', article: 'der', plural: 'die Studenten', english: 'university student (male)/students', gender: 'masculine', ending: '-en' },
+                { german: 'Studentin', article: 'die', plural: 'die Studentinnen', english: 'university student (female)/students', gender: 'feminine', ending: '-nen' },
+                { german: 'Stuhl', article: 'der', plural: 'die Stühle', english: 'chair/chairs', gender: 'masculine', ending: '-¨e' },
+                { german: 'Stunde', article: 'die', plural: 'die Stunden', english: 'lesson/lessons', gender: 'feminine', ending: '-n' },
+                { german: 'Tafel', article: 'die', plural: 'die Tafeln', english: 'board/boards', gender: 'feminine', ending: '-n' },
+                { german: 'Taschenrechner', article: 'der', plural: 'die Taschenrechner', english: 'calculator/calculators', gender: 'masculine', ending: '-' },
+                { german: 'Tisch', article: 'der', plural: 'die Tische', english: 'table/tables', gender: 'masculine', ending: '-e' },
+                { german: 'Tür', article: 'die', plural: 'die Türen', english: 'door/doors', gender: 'feminine', ending: '-en' },
+                { german: 'Uhr', article: 'die', plural: 'die Uhren', english: 'clock/clocks', gender: 'feminine', ending: '-en' },
+                { german: 'Universität', article: 'die', plural: 'die Universitäten', english: 'university/universities', gender: 'feminine', ending: '-en' },
+                { german: 'Wörterbuch', article: 'das', plural: 'die Wörterbücher', english: 'dictionary/dictionaries', gender: 'neuter', ending: '-¨er' },
+                { german: 'Zeugnis', article: 'das', plural: 'die Zeugnisse', english: 'report card/report cards', gender: 'neuter', ending: '-se' },
+            ]);
+
+            const [currentIndex, setCurrentIndex] = useState(0);
+            const [step, setStep] = useState('article');
+            const [selectedArticle, setSelectedArticle] = useState(null);
+            const [pluralInput, setPluralInput] = useState('');
+            const [articleCorrect, setArticleCorrect] = useState(null);
+            const [pluralCorrect, setPluralCorrect] = useState(null);
+            const [showFinalAnswer, setShowFinalAnswer] = useState(false);
+            const [score, setScore] = useState({ articles: 0, plurals: 0, total: 0 });
+            const [isComplete, setIsComplete] = useState(false);
+
+            const currentWord = words[currentIndex];
+
+            const handleArticleClick = (article) => {
+                setSelectedArticle(article);
+                const correct = article === currentWord.article;
+                setArticleCorrect(correct);
+                
+                if (correct) {
+                    setScore(prev => ({ ...prev, articles: prev.articles + 1 }));
+                }
+            };
+
+            const normalizeString = (str) => {
+                return str.toLowerCase().trim().replace(/\s+/g, ' ');
+            };
+
+            const checkPlural = () => {
+                const userAnswer = normalizeString(pluralInput);
+                const correctAnswer = normalizeString(currentWord.plural);
+                
+                const correct = userAnswer === correctAnswer;
+                setPluralCorrect(correct);
+                
+                if (correct) {
+                    setScore(prev => ({ ...prev, plurals: prev.plurals + 1 }));
+                }
+                
+                setScore(prev => ({ ...prev, total: prev.total + 1 }));
+                setShowFinalAnswer(true);
+            };
+
+            const nextCard = () => {
+                if (currentIndex + 1 >= words.length) {
+                    setIsComplete(true);
+                } else {
+                    setCurrentIndex(currentIndex + 1);
+                    setStep('article');
+                    setSelectedArticle(null);
+                    setPluralInput('');
+                    setArticleCorrect(null);
+                    setPluralCorrect(null);
+                    setShowFinalAnswer(false);
+                }
+            };
+
+            const continueToPlural = () => {
+                setStep('plural');
+            };
+
+            const restartQuiz = () => {
+                setCurrentIndex(0);
+                setStep('article');
+                setSelectedArticle(null);
+                setPluralInput('');
+                setArticleCorrect(null);
+                setPluralCorrect(null);
+                setShowFinalAnswer(false);
+                setScore({ articles: 0, plurals: 0, total: 0 });
+                setIsComplete(false);
+            };
+
+            const getButtonColor = (article) => {
+                if (articleCorrect === null) {
+                    if (article === 'der') return 'bg-blue-500 hover:bg-blue-600';
+                    if (article === 'die') return 'bg-red-500 hover:bg-red-600';
+                    return 'bg-green-500 hover:bg-green-600';
+                }
+                
+                if (selectedArticle === article) {
+                    return article === currentWord.article ? 'bg-green-600' : 'bg-gray-400';
+                }
+                
+                if (article === currentWord.article) {
+                    return 'bg-green-600';
+                }
+                
+                return 'bg-gray-300';
+            };
+
+            const handleKeyPress = (e) => {
+                if (e.key === 'Enter' && pluralInput.trim() && !showFinalAnswer) {
+                    checkPlural();
+                }
+            };
+
+            if (isComplete) {
+                const articlePercent = Math.round((score.articles / score.total) * 100);
+                const pluralPercent = Math.round((score.plurals / score.total) * 100);
+                const totalCorrect = score.articles + score.plurals;
+                const totalPossible = score.total * 2;
+                const overallPercent = Math.round((totalCorrect / totalPossible) * 100);
+
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 p-8 flex items-center justify-center">
+                        <div className="w-full max-w-2xl shadow-2xl bg-white rounded-lg">
+                            <div className="p-8 text-center">
+                                <h1 className="text-4xl font-bold text-gray-800 mb-4">🎉 Geschafft!</h1>
+                                <h2 className="text-3xl font-bold text-indigo-600 mb-6">Quiz Complete!</h2>
+                                <div className="bg-indigo-50 rounded-lg p-8 mb-6">
+                                    <div className="text-6xl font-bold text-indigo-600 mb-4">
+                                        {totalCorrect}/{totalPossible}
+                                    </div>
+                                    <div className="text-2xl text-gray-700 mb-6">
+                                        {overallPercent}% overall
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4 text-left">
+                                        <div className="bg-white rounded-lg p-4">
+                                            <div className="text-sm text-gray-600 mb-1">Articles</div>
+                                            <div className="text-2xl font-bold text-blue-600">
+                                                {score.articles}/{score.total}
+                                            </div>
+                                            <div className="text-sm text-gray-600">{articlePercent}%</div>
+                                        </div>
+                                        <div className="bg-white rounded-lg p-4">
+                                            <div className="text-sm text-gray-600 mb-1">Plurals</div>
+                                            <div className="text-2xl font-bold text-purple-600">
+                                                {score.plurals}/{score.total}
+                                            </div>
+                                            <div className="text-sm text-gray-600">{pluralPercent}%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {overallPercent >= 90 ? (
+                                    <p className="text-xl text-gray-700 mb-6">Ausgezeichnet! Excellent work!</p>
+                                ) : overallPercent >= 70 ? (
+                                    <p className="text-xl text-gray-700 mb-6">Gut gemacht! Good job!</p>
+                                ) : (
+                                    <p className="text-xl text-gray-700 mb-6">Keep practicing! You're getting better!</p>
+                                )}
+                                <button
+                                    onClick={restartQuiz}
+                                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 text-lg font-semibold rounded-lg"
+                                >
+                                    Start Over
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 p-8 flex items-center justify-center">
+                    <div className="w-full max-w-2xl">
+                        <div className="text-center mb-6">
+                            <h1 className="text-4xl font-bold text-gray-800 mb-2">Artikel & Plural</h1>
+                            <p className="text-gray-600">Articles & Plurals Combined Practice</p>
+                            <div className="mt-4 flex justify-center gap-6 text-lg font-semibold text-gray-700">
+                                <div>Articles: {score.articles}/{score.total}</div>
+                                <div>Plurals: {score.plurals}/{score.total}</div>
+                            </div>
+                        </div>
+
+                        <div className="shadow-2xl bg-white rounded-lg">
+                            <div className="p-8">
+                                <div className="text-center mb-8">
+                                    <div className="text-sm text-gray-500 mb-2">
+                                        Card {currentIndex + 1} of {words.length}
+                                    </div>
+                                    <div className="text-5xl font-bold text-gray-800 mb-4">
+                                        {currentWord.german}
+                                    </div>
+                                    <div className="text-xl text-gray-600">
+                                        ({currentWord.english})
+                                    </div>
+                                    <div className="mt-4">
+                                        <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                                            step === 'article' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700'
+                                        }`}>
+                                            Step {step === 'article' ? '1: Article' : '2: Plural'}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {step === 'article' && articleCorrect === null && (
+                                    <div>
+                                        <p className="text-center text-gray-700 mb-6 font-medium">
+                                            Choose the correct article:
+                                        </p>
+                                        <div className="flex gap-4 justify-center">
+                                            <button
+                                                onClick={() => handleArticleClick('der')}
+                                                className={`${getButtonColor('der')} text-white px-8 py-6 text-2xl font-bold rounded-lg transition-all`}
+                                            >
+                                                der
+                                            </button>
+                                            <button
+                                                onClick={() => handleArticleClick('die')}
+                                                className={`${getButtonColor('die')} text-white px-8 py-6 text-2xl font-bold rounded-lg transition-all`}
+                                            >
+                                                die
+                                            </button>
+                                            <button
+                                                onClick={() => handleArticleClick('das')}
+                                                className={`${getButtonColor('das')} text-white px-8 py-6 text-2xl font-bold rounded-lg transition-all`}
+                                            >
+                                                das
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {step === 'article' && articleCorrect !== null && !showFinalAnswer && (
+                                    <div className="text-center">
+                                        <div className={`text-2xl font-bold mb-4 ${articleCorrect ? 'text-green-600' : 'text-red-600'}`}>
+                                            {articleCorrect ? 'Richtig! ✓' : `Falsch. Die richtige Antwort ist "${currentWord.article}"`}
+                                        </div>
+                                        <div className="bg-gray-50 rounded-lg p-6 mb-6">
+                                            <div className="text-3xl font-bold text-gray-800 mb-2">
+                                                {currentWord.article} {currentWord.german}
+                                            </div>
+                                            <div className="text-gray-600 capitalize text-sm">
+                                                ({currentWord.gender})
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={continueToPlural}
+                                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 text-lg font-semibold rounded-lg"
+                                        >
+                                            Continue to Plural →
+                                        </button>
+                                    </div>
+                                )}
+
+                                {step === 'plural' && !showFinalAnswer && (
+                                    <div>
+                                        <div className="bg-blue-50 rounded-lg p-4 mb-6 text-center">
+                                            <div className="text-lg font-semibold text-gray-700">
+                                                Singular: <span className="text-blue-600">{currentWord.article} {currentWord.german}</span>
+                                            </div>
+                                        </div>
+                                        <p className="text-center text-gray-700 mb-4 font-medium">
+                                            Type the plural form:
+                                        </p>
+                                        <div className="flex gap-3 justify-center items-center mb-4">
+                                            <input
+                                                type="text"
+                                                value={pluralInput}
+                                                onChange={(e) => setPluralInput(e.target.value)}
+                                                onKeyPress={handleKeyPress}
+                                                placeholder="die..."
+                                                className="px-4 py-3 border-2 border-gray-300 rounded-lg text-xl focus:outline-none focus:border-purple-500 w-80"
+                                                autoFocus
+                                            />
+                                            <button
+                                                onClick={checkPlural}
+                                                disabled={!pluralInput.trim()}
+                                                className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 text-lg rounded-lg disabled:bg-gray-300"
+                                            >
+                                                Check
+                                            </button>
+                                        </div>
+                                        <p className="text-center text-sm text-gray-500">
+                                            Press Enter to submit
+                                        </p>
+                                    </div>
+                                )}
+
+                                {showFinalAnswer && (
+                                    <div className="text-center">
+                                        <div className={`text-2xl font-bold mb-4 ${pluralCorrect ? 'text-green-600' : 'text-red-600'}`}>
+                                            {pluralCorrect ? 'Richtig! ✓' : 'Falsch ✗'}
+                                        </div>
+                                        <div className="bg-gray-50 rounded-lg p-6 mb-6">
+                                            <div className="text-3xl font-bold text-gray-800 mb-3">
+                                                {currentWord.plural}
+                                            </div>
+                                            <div className="text-lg text-gray-600 mb-2">
+                                                Plural ending: <span className="font-bold text-purple-600">{currentWord.ending}</span>
+                                            </div>
+                                            {!pluralCorrect && (
+                                                <div className="text-md text-gray-500 mt-3">
+                                                    You wrote: <span className="font-semibold">{pluralInput}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="bg-indigo-50 rounded-lg p-4 mb-6">
+                                            <div className="text-sm text-gray-600 mb-2">This card's results:</div>
+                                            <div className="flex justify-center gap-6">
+                                                <div className={`font-semibold ${articleCorrect ? 'text-green-600' : 'text-red-600'}`}>
+                                                    Article: {articleCorrect ? '✓' : '✗'}
+                                                </div>
+                                                <div className={`font-semibold ${pluralCorrect ? 'text-green-600' : 'text-red-600'}`}>
+                                                    Plural: {pluralCorrect ? '✓' : '✗'}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={nextCard}
+                                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 text-lg font-semibold rounded-lg"
+                                        >
+                                            {currentIndex + 1 >= words.length ? 'Finish' : 'Next Card →'}
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="mt-6 text-center text-sm text-gray-600 bg-white rounded-lg p-4 shadow">
+                            <p className="font-semibold mb-2">Remember:</p>
+                            <div className="flex justify-center gap-4">
+                                <div><span className="text-blue-600 font-bold">der</span> = masculine</div>
+                                <div><span className="text-red-600 font-bold">die</span> = feminine</div>
+                                <div><span className="text-green-600 font-bold">das</span> = neuter</div>
+                            </div>
+                            <p className="mt-2 text-xs">All plurals use "die"</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<GermanCombinedFlashcards />, document.getElementById('root'));
+    </script>
+</body>
+</html>
