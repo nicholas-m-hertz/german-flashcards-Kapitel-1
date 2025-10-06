@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>German Vocabulary Practice</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const GermanVocabFlashcards = () => {
+            const allVocab = {
+                kapitel1: [
+                    { german: 'Alles klar?', english: 'Is everything OK?' },
+                    { german: 'Auf Wiedersehen.', english: 'Good-bye.' },
+                    { german: 'Bis bald./Bis gleich.', english: 'See you soon.' },
+                    { german: 'Bis dann./Bis später.', english: 'See you later.' },
+                    { german: 'Bis morgen.', english: 'See you tomorrow.' },
+                    { german: 'Bitte.', english: 'Please./You\'re welcome.' },
+                    { german: 'bleiben', english: 'to stay, to remain' },
+                    { german: 'da/dort', english: 'there' },
+                    { german: 'Danke.', english: 'Thank you.' },
+                    { german: 'Entschuldigen Sie.', english: 'Excuse me. (formal)' },
+                    { german: 'Entschuldigung.', english: 'Excuse me.' },
+                    { german: 'Es geht.', english: 'So-so.' },
+                    { german: 'Es tut mir leid.', english: 'I\'m sorry.' },
+                    { german: 'Freut mich./Angenehm.', english: 'Pleased to meet you.' },
+                    { german: 'Gern geschehen.', english: 'My pleasure.' },
+                    { german: 'Gute Nacht.', english: 'Good night.' },
+                    { german: 'Guten Abend.', english: 'Good evening.' },
+                    { german: 'Guten Morgen.', english: 'Good morning.' },
+                    { german: 'Hallo./Guten Tag.', english: 'Hello.' },
+                    { german: 'hier', english: 'here' },
+                    { german: 'Ich heiße…', english: 'My name is…' },
+                    { german: 'ja', english: 'yes' },
+                    { german: 'Mir auch.', english: 'Me, too.' },
+                    { german: 'Mir geht\'s (sehr) gut.', english: 'I\'m (very) well.' },
+                    { german: 'nein', english: 'no' },
+                    { german: 'neu', english: 'new' },
+                    { german: 'Prima.', english: 'Great.' },
+                    { german: '(Nicht) schlecht.', english: '(Not) bad.' },
+                    { german: 'Schön dich/Sie kennen zu lernen.', english: 'Nice to meet you.' },
+                    { german: 'Schönen Tag noch!', english: 'Have a nice day!' },
+                    { german: 'Sehr gut.', english: 'Very well.' },
+                    { german: 'sein', english: 'to be' },
+                    { german: 'Tschüss.', english: 'Bye.' },
+                    { german: 'Vielen Dank.', english: 'Thank you very much.' },
+                    { german: 'werden', english: 'to become' },
+                    { german: 'Wie geht es Ihnen?', english: 'How are you? (formal)' },
+                    { german: 'Wie geht\'s (dir)?', english: 'How are you? (informal)' },
+                    { german: 'Wie heißen Sie?', english: 'What is your name? (formal)' },
+                    { german: 'Wie heißt du?', english: 'What is your name? (informal)' },
+                    { german: 'wo?', english: 'where?' },
+                    { german: 'Ziemlich gut.', english: 'Fine.' },
+                    { german: 'aber', english: 'but' },
+                    { german: 'haben', english: 'to have' },
+                    { german: 'oder', english: 'or' },
+                    { german: 'und', english: 'and' },
+                    { german: 'Was ist das?', english: 'What is that?' },
+                    { german: 'Wer ist das?', english: 'Who is it?' },
+                    { german: 'wie viel?', english: 'how much?' },
+                    { german: 'wie viele?', english: 'how many?' },
+                ],
+                kapitel2: [
+                    { german: 'Abend', english: 'evening' },
+                    { german: 'abends', english: 'in the evening' },
+                    { german: 'am', english: 'on + day/date' },
+                    { german: 'antworten', english: 'to answer' },
+                    { german: 'arbeiten', english: 'to work' },
+                    { german: 'bauen', english: 'to build' },
+                    { german: 'bedeuten', english: 'to mean' },
+                    { german: 'begrüßen', english: 'to greet' },
+                    { german: 'belegen', english: 'to take (a class)' },
+                    { german: 'brauchen', english: 'to need' },
+                    { german: 'bringen', english: 'to bring' },
+                    { german: 'finden', english: 'to find' },
+                    { german: 'fragen', english: 'to ask' },
+                    { german: 'gehen', english: 'to go' },
+                    { german: 'heißen', english: 'to be named' },
+                    { german: 'hören', english: 'to hear; to listen to' },
+                    { german: 'kaufen', english: 'to buy' },
+                    { german: 'kommen', english: 'to come' },
+                    { german: 'korrigieren', english: 'to correct' },
+                    { german: 'kosten', english: 'to cost' },
+                    { german: 'leben', english: 'to live' },
+                    { german: 'lernen', english: 'to study; to learn' },
+                    { german: 'lieben', english: 'to love' },
+                    { german: 'machen', english: 'to do; to make' },
+                    { german: 'öffnen', english: 'to open' },
+                    { german: 'regnen', english: 'to rain' },
+                    { german: 'reisen', english: 'to travel' },
+                    { german: 'sagen', english: 'to say' },
+                    { german: 'schreiben', english: 'to write' },
+                    { german: 'spielen', english: 'to play' },
+                    { german: 'studieren', english: 'to study; to major in' },
+                    { german: 'suchen', english: 'to look for' },
+                    { german: 'verstehen', english: 'to understand' },
+                    { german: 'warten', english: 'to wait' },
+                    { german: 'wiederholen', english: 'to repeat' },
+                    { german: 'wohnen', english: 'to live (somewhere)' },
+                ],
+                kapitel3: [
+                    { german: 'alt', english: 'old' },
+                    { german: 'dick', english: 'fat' },
+                    { german: 'dünn', english: 'thin' },
+                    { german: 'geschieden', english: 'divorced' },
+                    { german: 'getrennt', english: 'separated' },
+                    { german: 'groß', english: 'big; tall' },
+                    { german: 'hässlich', english: 'ugly' },
+                    { german: 'heiraten', english: 'to marry' },
+                    { german: 'hübsch', english: 'pretty' },
+                    { german: 'jung', english: 'young' },
+                    { german: 'klein', english: 'small; short' },
+                    { german: 'ledig', english: 'single' },
+                    { german: 'schön', english: 'pretty; beautiful' },
+                    { german: 'verheiratet', english: 'married' },
+                    { german: 'verlobt', english: 'engaged' },
+                ],
+            };
+
+            const [selectedChapters, setSelectedChapters] = useState(new Set(['kapitel1']));
+            const [showSelection, setShowSelection] = useState(true);
+            const [quizMode, setQuizMode] = useState('flashcard');
+            const [direction, setDirection] = useState('german-english');
+            const [words, setWords] = useState([]);
+            const [currentIndex, setCurrentIndex] = useState(0);
+            const [userAnswer, setUserAnswer] = useState('');
+            const [showAnswer, setShowAnswer] = useState(false);
+            const [isCorrect, setIsCorrect] = useState(null);
+            const [score, setScore] = useState({ correct: 0, total: 0 });
+            const [isComplete, setIsComplete] = useState(false);
+            const [missedWords, setMissedWords] = useState([]);
+            const [showReview, setShowReview] = useState(false);
+            const [multipleChoiceOptions, setMultipleChoiceOptions] = useState([]);
+
+            const currentWord = words[currentIndex];
+
+            const shuffleArray = (array) => {
+                const shuffled = [...array];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                return shuffled;
+            };
+
+            const getQuestion = () => {
+                return direction === 'german-english' ? currentWord.german : currentWord.english;
+            };
+
+            const getAnswer = () => {
+                return direction === 'german-english' ? currentWord.english : currentWord.german;
+            };
+
+            const generateMultipleChoice = (correctAnswer, wordList) => {
+                const options = [correctAnswer];
+                const otherWords = wordList.filter(w => 
+                    (direction === 'german-english' ? w.english : w.german) !== correctAnswer
+                );
+                
+                while (options.length < 4 && otherWords.length > 0) {
+                    const randomIdx = Math.floor(Math.random() * otherWords.length);
+                    const option = direction === 'german-english' ? otherWords[randomIdx].english : otherWords[randomIdx].german;
+                    options.push(option);
+                    otherWords.splice(randomIdx, 1);
+                }
+                
+                return shuffleArray(options);
+            };
+
+            const toggleChapter = (chapter) => {
+                const newSelection = new Set(selectedChapters);
+                if (newSelection.has(chapter)) {
+                    newSelection.delete(chapter);
+                } else {
+                    newSelection.add(chapter);
+                }
+                setSelectedChapters(newSelection);
+            };
+
+            const startQuiz = () => {
+                if (selectedChapters.size === 0) {
+                    alert('Please select at least one chapter!');
+                    return;
+                }
+                
+                const selectedWords = [];
+                selectedChapters.forEach(chapter => {
+                    selectedWords.push(...allVocab[chapter]);
+                });
+                
+                const shuffled = shuffleArray(selectedWords);
+                setWords(shuffled);
+                
+                if (quizMode === 'multiple' && shuffled.length > 0) {
+                    const correctAnswer = direction === 'german-english' ? shuffled[0].english : shuffled[0].german;
+                    setMultipleChoiceOptions(generateMultipleChoice(correctAnswer, shuffled));
+                }
+                
+                setShowSelection(false);
+            };
+
+            const backToSelection = () => {
+                setShowSelection(true);
+                setCurrentIndex(0);
+                setUserAnswer('');
+                setShowAnswer(false);
+                setIsCorrect(null);
+                setScore({ correct: 0, total: 0 });
+                setIsComplete(false);
+                setMissedWords([]);
+                setMultipleChoiceOptions([]);
+                setShowReview(false);
+            };
+
+            const normalizeString = (str) => {
+                return str.toLowerCase().trim().replace(/[.?!]/g, '');
+            };
+
+            const checkAnswer = (answer) => {
+                const correctAnswer = getAnswer();
+                const correct = normalizeString(answer) === normalizeString(correctAnswer);
+                setIsCorrect(correct);
+                setShowAnswer(true);
+                
+                if (correct) {
+                    setScore(prev => ({ correct: prev.correct + 1, total: prev.total + 1 }));
+                } else {
+                    setScore(prev => ({ ...prev, total: prev.total + 1 }));
+                    setMissedWords(prev => [...prev, currentWord]);
+                }
+            };
+
+            const handleFlashcardKnew = () => {
+                setScore(prev => ({ correct: prev.correct + 1, total: prev.total + 1 }));
+                nextCard();
+            };
+
+            const handleFlashcardDidntKnow = () => {
+                setScore(prev => ({ ...prev, total: prev.total + 1 }));
+                setMissedWords(prev => [...prev, currentWord]);
+                nextCard();
+            };
+
+            const handleShowFlashcard = () => {
+                setShowAnswer(true);
+            };
+
+            const handleMultipleChoice = (choice) => {
+                setUserAnswer(choice);
+                checkAnswer(choice);
+            };
+
+            const nextCard = () => {
+                if (currentIndex + 1 >= words.length) {
+                    setIsComplete(true);
+                } else {
+                    setCurrentIndex(currentIndex + 1);
+                    setUserAnswer('');
+                    setShowAnswer(false);
+                    setIsCorrect(null);
+                    
+                    if (quizMode === 'multiple') {
+                        const correctAnswer = direction === 'german-english' ? words[currentIndex + 1].english : words[currentIndex + 1].german;
+                        setMultipleChoiceOptions(generateMultipleChoice(correctAnswer, words));
+                    }
+                }
+            };
+
+            const restartQuiz = () => {
+                setCurrentIndex(0);
+                setUserAnswer('');
+                setShowAnswer(false);
+                setIsCorrect(null);
+                setScore({ correct: 0, total: 0 });
+                setIsComplete(false);
+                setMissedWords([]);
+                setShowReview(false);
+            };
+
+            const finishQuiz = () => {
+                setIsComplete(true);
+            };
+
+            if (showSelection) {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 p-8 flex items-center justify-center">
+                        <div className="w-full max-w-2xl shadow-2xl bg-white rounded-lg">
+                            <div className="p-8">
+                                <h1 className="text-4xl font-bold text-gray-800 mb-2 text-center">German Vocabulary</h1>
+                                <p className="text-gray-600 text-center mb-6">Select quiz mode and chapters</p>
+                                
+                                <div className="mb-6">
+                                    <p className="text-lg font-semibold text-gray-700 mb-3 text-center">Quiz Mode:</p>
+                                    <div className="grid grid-cols-2 gap-4 mb-4">
+                                        <button
+                                            onClick={() => setQuizMode('flashcard')}
+                                            className={`p-4 rounded-lg border-2 transition-all ${
+                                                quizMode === 'flashcard'
+                                                    ? 'border-purple-600 bg-purple-50'
+                                                    : 'border-gray-300 bg-white hover:border-purple-300'
+                                            }`}
+                                        >
+                                            <h4 className="font-bold text-gray-800 mb-1">Flashcard Mode</h4>
+                                            <p className="text-sm text-gray-600">Click to reveal & self-assess</p>
+                                        </button>
+                                        <button
+                                            onClick={() => setQuizMode('multiple')}
+                                            className={`p-4 rounded-lg border-2 transition-all ${
+                                                quizMode === 'multiple'
+                                                    ? 'border-pink-600 bg-pink-50'
+                                                    : 'border-gray-300 bg-white hover:border-pink-300'
+                                            }`}
+                                        >
+                                            <h4 className="font-bold text-gray-800 mb-1">Multiple Choice</h4>
+                                            <p className="text-sm text-gray-600">Choose from 4 options</p>
+                                        </button>
+                                    </div>
+                                    
+                                    <p className="text-base font-semibold text-gray-700 mb-3 text-center">Direction:</p>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <button
+                                            onClick={() => setDirection('german-english')}
+                                            className={`p-3 rounded-lg border-2 transition-all ${
+                                                direction === 'german-english'
+                                                    ? 'border-indigo-600 bg-indigo-50'
+                                                    : 'border-gray-300 bg-white hover:border-indigo-300'
+                                            }`}
+                                        >
+                                            <p className="font-bold text-gray-800">German → English</p>
+                                        </button>
+                                        <button
+                                            onClick={() => setDirection('english-german')}
+                                            className={`p-3 rounded-lg border-2 transition-all ${
+                                                direction === 'english-german'
+                                                    ? 'border-indigo-600 bg-indigo-50'
+                                                    : 'border-gray-300 bg-white hover:border-indigo-300'
+                                            }`}
+                                        >
+                                            <p className="font-bold text-gray-800">English → German</p>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div className="space-y-4 mb-8">
+                                    <div 
+                                        onClick={() => toggleChapter('kapitel1')}
+                                        className={`p-6 rounded-lg border-2 cursor-pointer transition-all ${
+                                            selectedChapters.has('kapitel1') 
+                                                ? 'border-purple-600 bg-purple-50' 
+                                                : 'border-gray-300 bg-white hover:border-purple-300'
+                                        }`}
+                                    >
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <h3 className="text-xl font-bold text-gray-800">Kapitel 1</h3>
+                                                <p className="text-gray-600">Greetings, Basic Phrases & Questions</p>
+                                                <p className="text-sm text-gray-500 mt-1">{allVocab.kapitel1.length} words</p>
+                                            </div>
+                                            <div className={`w-6 h-6 rounded border-2 flex items-center justify-center ${
+                                                selectedChapters.has('kapitel1') 
+                                                    ? 'border-purple-600 bg-purple-600' 
+                                                    : 'border-gray-300'
+                                            }`}>
+                                                {selectedChapters.has('kapitel1') && (
+                                                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div 
+                                        onClick={() => toggleChapter('kapitel2')}
+                                        className={`p-6 rounded-lg border-2 cursor-pointer transition-all ${
+                                            selectedChapters.has('kapitel2') 
+                                                ? 'border-pink-600 bg-pink-50' 
+                                                : 'border-gray-300 bg-white hover:border-pink-300'
+                                        }`}
+                                    >
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <h3 className="text-xl font-bold text-gray-800">Kapitel 2</h3>
+                                                <p className="text-gray-600">Verbs, Time & Activities</p>
+                                                <p className="text-sm text-gray-500 mt-1">{allVocab.kapitel2.length} words</p>
+                                            </div>
+                                            <div className={`w-6 h-6 rounded border-2 flex items-center justify-center ${
+                                                selectedChapters.has('kapitel2') 
+                                                    ? 'border-pink-600 bg-pink-600' 
+                                                    : 'border-gray-300'
+                                            }`}>
+                                                {selectedChapters.has('kapitel2') && (
+                                                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div 
+                                        onClick={() => toggleChapter('kapitel3')}
+                                        className={`p-6 rounded-lg border-2 cursor-pointer transition-all ${
+                                            selectedChapters.has('kapitel3') 
+                                                ? 'border-indigo-600 bg-indigo-50' 
+                                                : 'border-gray-300 bg-white hover:border-indigo-300'
+                                        }`}
+                                    >
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <h3 className="text-xl font-bold text-gray-800">Kapitel 3</h3>
+                                                <p className="text-gray-600">Adjectives & Descriptions</p>
+                                                <p className="text-sm text-gray-500 mt-1">{allVocab.kapitel3.length} words</p>
+                                            </div>
+                                            <div className={`w-6 h-6 rounded border-2 flex items-center justify-center ${
+                                                selectedChapters.has('kapitel3') 
+                                                    ? 'border-indigo-600 bg-indigo-600' 
+                                                    : 'border-gray-300'
+                                            }`}>
+                                                {selectedChapters.has('kapitel3') && (
+                                                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="text-center">
+                                    <button
+                                        onClick={startQuiz}
+                                        disabled={selectedChapters.size === 0}
+                                        className="bg-purple-600 hover:bg-purple-700 text-white px-12 py-4 text-xl font-semibold rounded-lg disabled:bg-gray-300"
+                                    >
+                                        Start Quiz ({Array.from(selectedChapters).reduce((sum, ch) => sum + allVocab[ch].length, 0)} words)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (showReview) {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 p-8">
+                        <div className="max-w-4xl mx-auto">
+                            <div className="shadow-2xl bg-white rounded-lg">
+                                <div className="p-8">
+                                    <h1 className="text-4xl font-bold text-gray-800 mb-2 text-center">Review Missed Words</h1>
+                                    <p className="text-gray-600 text-center mb-6">
+                                        {missedWords.length === 0 ? 'Perfect score! No words to review.' : `You missed ${missedWords.length} word${missedWords.length === 1 ? '' : 's'}`}
+                                    </p>
+                                    
+                                    {missedWords.length > 0 && (
+                                        <div className="space-y-4">
+                                            {missedWords.map((word, idx) => (
+                                                <div key={idx} className="bg-gray-50 rounded-lg p-6 border-2 border-gray-200">
+                                                    <div className="text-2xl font-bold text-gray-800 mb-2">{word.german}</div>
+                                                    <div className="text-xl text-green-600 font-semibold">{word.english}</div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                    
+                                    <div className="flex gap-4 justify-center mt-8">
+                                        <button
+                                            onClick={() => setShowReview(false)}
+                                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 text-lg font-semibold rounded-lg"
+                                        >
+                                            Back to Results
+                                        </button>
+                                        <button
+                                            onClick={backToSelection}
+                                            className="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 text-lg font-semibold rounded-lg"
+                                        >
+                                            New Quiz
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (isComplete) {
+                const percent = Math.round((score.correct / score.total) * 100);
+                
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 p-8 flex items-center justify-center">
+                        <div className="w-full max-w-2xl shadow-2xl bg-white rounded-lg">
+                            <div className="p-8 text-center">
+                                <h1 className="text-4xl font-bold text-gray-800 mb-4">Geschafft!</h1>
+                                <h2 className="text-3xl font-bold text-purple-600 mb-6">Quiz Complete!</h2>
+                                <div className="bg-purple-50 rounded-lg p-8 mb-6">
+                                    <div className="text-6xl font-bold text-purple-600 mb-4">
+                                        {score.correct}/{score.total}
+                                    </div>
+                                    <div className="text-2xl text-gray-700">
+                                        {percent}% correct
+                                    </div>
+                                </div>
+                                {percent >= 90 ? (
+                                    <p className="text-xl text-gray-700 mb-6">Ausgezeichnet! Excellent work!</p>
+                                ) : percent >= 70 ? (
+                                    <p className="text-xl text-gray-700 mb-6">Gut gemacht! Good job!</p>
+                                ) : (
+                                    <p className="text-xl text-gray-700 mb-6">Keep practicing!</p>
+                                )}
+                                <div className="flex flex-wrap gap-4 justify-center">
+                                    {missedWords.length > 0 && (
+                                        <button
+                                            onClick={() => setShowReview(true)}
+                                            className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 text-lg font-semibold rounded-lg"
+                                        >
+                                            Review Missed ({missedWords.length})
+                                        </button>
+                                    )}
+                                    <button
+                                        onClick={restartQuiz}
+                                        className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 text-lg font-semibold rounded-lg"
+                                    >
+                                        Practice Again
+                                    </button>
+                                    <button
+                                        onClick={backToSelection}
+                                        className="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 text-lg font-semibold rounded-lg"
+                                    >
+                                        Change Settings
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 p-8">
+                    <div className="w-full max-w-2xl mx-auto">
+                        <div className="bg-white rounded-lg shadow-lg p-4 mb-6">
+                            <div className="flex justify-between items-center flex-wrap gap-3">
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={backToSelection}
+                                        className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 text-sm rounded-lg"
+                                    >
+                                        ← Back
+                                    </button>
+                                    <button
+                                        onClick={finishQuiz}
+                                        className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 text-sm rounded-lg"
+                                    >
+                                        Finish Quiz
+                                    </button>
+                                </div>
+                                <div className="flex gap-6 text-base font-semibold text-gray-700">
+                                    <div>Card {currentIndex + 1}/{words.length}</div>
+                                    <div>{score.correct}/{score.total} ({score.total > 0 ? Math.round((score.correct / score.total) * 100) : 0}%)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="text-center mb-6">
+                            <h1 className="text-4xl font-bold text-gray-800 mb-2">Vocabulary Quiz</h1>
+                            <p className="text-gray-600">
+                                {direction === 'german-english' 
+                                    ? (quizMode === 'flashcard' ? 'German → English' : 'Choose the English translation')
+                                    : (quizMode === 'flashcard' ? 'English → German' : 'Choose the German word')
+                                }
+                            </p>
+                        </div>
+
+                        <div className="shadow-2xl bg-white rounded-lg">
+                            <div className="p-8">
+                                {!showAnswer && quizMode === 'flashcard' && (
+                                    <div className="text-center">
+                                        <div className="min-h-[250px] flex items-center justify-center">
+                                            <div>
+                                                <div className="text-5xl font-bold text-gray-800 mb-8">
+                                                    {getQuestion()}
+                                                </div>
+                                                <button
+                                                    onClick={handleShowFlashcard}
+                                                    className="bg-purple-600 hover:bg-purple-700 text-white px-10 py-4 text-xl font-semibold rounded-lg"
+                                                >
+                                                    Show Answer
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {showAnswer && quizMode === 'flashcard' && (
+                                    <div className="text-center">
+                                        <div className="min-h-[250px] flex flex-col items-center justify-center">
+                                            <div className="text-5xl text-green-600 font-bold mb-8">
+                                                {getAnswer()}
+                                            </div>
+                                            <div className="border-t pt-6 w-full">
+                                                <p className="text-gray-600 mb-4 text-lg">Did you know this?</p>
+                                                <div className="flex gap-4 justify-center">
+                                                    <button
+                                                        onClick={handleFlashcardDidntKnow}
+                                                        className="bg-red-500 hover:bg-red-600 text-white px-10 py-4 text-xl rounded-lg"
+                                                    >
+                                                        ✗ No
+                                                    </button>
+                                                    <button
+                                                        onClick={handleFlashcardKnew}
+                                                        className="bg-green-500 hover:bg-green-600 text-white px-10 py-4 text-xl rounded-lg"
+                                                    >
+                                                        ✓ Yes
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {!showAnswer && quizMode === 'multiple' && (
+                                    <div>
+                                        <div className="text-center mb-6">
+                                            <div className="text-5xl font-bold text-gray-800 mb-8">
+                                                {getQuestion()}
+                                            </div>
+                                        </div>
+                                        <p className="text-center text-gray-700 mb-6 font-medium">
+                                            Choose the correct translation:
+                                        </p>
+                                        <div className="grid grid-cols-1 gap-3">
+                                            {multipleChoiceOptions.map((option, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    onClick={() => handleMultipleChoice(option)}
+                                                    className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-4 text-lg rounded-lg transition-all text-center"
+                                                >
+                                                    {option}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {showAnswer && quizMode === 'multiple' && (
+                                    <div className="text-center">
+                                        <div className={`text-2xl font-bold mb-4 ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
+                                            {isCorrect ? 'Richtig! ✓' : 'Falsch ✗'}
+                                        </div>
+                                        <div className="bg-gray-50 rounded-lg p-6 mb-6">
+                                            <div className="text-3xl font-bold text-gray-800 mb-3">
+                                                {getQuestion()}
+                                            </div>
+                                            <div className="text-2xl text-green-600 font-semibold">
+                                                {getAnswer()}
+                                            </div>
+                                            {!isCorrect && (
+                                                <div className="text-md text-gray-500 mt-3">
+                                                    You chose: <span className="font-semibold text-red-600">{userAnswer}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <button
+                                            onClick={nextCard}
+                                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 text-lg font-semibold rounded-lg"
+                                        >
+                                            {currentIndex + 1 >= words.length ? 'Finish' : 'Next Card →'}
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<GermanVocabFlashcards />, document.getElementById('root'));
+    </script>
+</body>
+</html>
