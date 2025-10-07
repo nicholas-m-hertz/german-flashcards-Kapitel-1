@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>German Numbers Practice</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const GermanNumbersPractice = () => {
+            const numberWords = {
+                0: 'null', 1: 'eins', 2: 'zwei', 3: 'drei', 4: 'vier', 5: 'fünf',
+                6: 'sechs', 7: 'sieben', 8: 'acht', 9: 'neun', 10: 'zehn',
+                11: 'elf', 12: 'zwölf', 13: 'dreizehn', 14: 'vierzehn', 15: 'fünfzehn',
+                16: 'sechzehn', 17: 'siebzehn', 18: 'achtzehn', 19: 'neunzehn',
+                20: 'zwanzig', 21: 'einundzwanzig', 22: 'zweiundzwanzig', 23: 'dreiundzwanzig',
+                24: 'vierundzwanzig', 25: 'fünfundzwanzig', 30: 'dreißig', 40: 'vierzig',
+                50: 'fünfzig', 60: 'sechzig', 70: 'siebzig', 80: 'achtzig', 90: 'neunzig',
+                100: 'hundert', 200: 'zweihundert', 300: 'dreihundert', 400: 'vierhundert',
+                500: 'fünfhundert', 1000: 'tausend', 10000: 'zehntausend',
+                100000: 'hunderttausend', 1000000: 'eine Million'
+            };
+
+            const [practiceMode, setPracticeMode] = useState(null);
+            const [difficulty, setDifficulty] = useState('easy');
+            const [currentNumber, setCurrentNumber] = useState(null);
+            const [userAnswer, setUserAnswer] = useState('');
+            const [showAnswer, setShowAnswer] = useState(false);
+            const [isCorrect, setIsCorrect] = useState(null);
+            const [score, setScore] = useState({ correct: 0, total: 0 });
+
+            const generateNumber = () => {
+                let num;
+                if (difficulty === 'easy') {
+                    num = Math.floor(Math.random() * 21);
+                } else if (difficulty === 'medium') {
+                    num = Math.floor(Math.random() * 100);
+                } else {
+                    num = Math.floor(Math.random() * 10000);
+                }
+                return num;
+            };
+
+            const numberToGerman = (num) => {
+                if (numberWords[num]) return numberWords[num];
+                
+                if (num < 100) {
+                    const ones = num % 10;
+                    const tens = Math.floor(num / 10) * 10;
+                    if (ones === 0) return numberWords[tens];
+                    const onesWord = ones === 1 ? 'ein' : numberWords[ones];
+                    return onesWord + 'und' + numberWords[tens];
+                }
+                
+                if (num < 1000) {
+                    const hundreds = Math.floor(num / 100);
+                    const remainder = num % 100;
+                    const hundredsWord = hundreds === 1 ? 'ein' : numberWords[hundreds];
+                    let result = hundredsWord + 'hundert';
+                    if (remainder > 0) result += numberToGerman(remainder);
+                    return result;
+                }
+                
+                if (num < 1000000) {
+                    const thousands = Math.floor(num / 1000);
+                    const remainder = num % 1000;
+                    const thousandsWord = thousands === 1 ? 'ein' : numberToGerman(thousands);
+                    let result = thousandsWord + 'tausend';
+                    if (remainder > 0) result += numberToGerman(remainder);
+                    return result;
+                }
+                
+                return num.toString();
+            };
+
+            const normalizeGerman = (str) => {
+                return str.toLowerCase().trim().replace(/\s+/g, '');
+            };
+
+            const startPractice = () => {
+                const num = generateNumber();
+                setCurrentNumber(num);
+                setUserAnswer('');
+                setShowAnswer(false);
+                setIsCorrect(null);
+            };
+
+            const checkAnswer = (answer) => {
+                let correct = false;
+                
+                if (practiceMode === 'write') {
+                    correct = normalizeGerman(answer) === normalizeGerman(numberToGerman(currentNumber));
+                } else if (practiceMode === 'translate') {
+                    correct = parseInt(answer) === currentNumber;
+                }
+                
+                setIsCorrect(correct);
+                setShowAnswer(true);
+                
+                if (correct) {
+                    setScore(prev => ({ correct: prev.correct + 1, total: prev.total + 1 }));
+                } else {
+                    setScore(prev => ({ ...prev, total: prev.total + 1 }));
+                }
+            };
+
+            const handleSubmit = () => {
+                checkAnswer(userAnswer);
+            };
+
+            const nextQuestion = () => {
+                startPractice();
+            };
+
+            const resetPractice = () => {
+                setPracticeMode(null);
+                setScore({ correct: 0, total: 0 });
+                setCurrentNumber(null);
+            };
+
+            if (!practiceMode) {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8 flex items-center justify-center">
+                        <div className="w-full max-w-3xl shadow-2xl bg-white rounded-lg">
+                            <div className="p-8">
+                                <h1 className="text-5xl font-bold text-gray-800 mb-2 text-center">Deutsche Zahlen</h1>
+                                <p className="text-xl text-gray-600 text-center mb-8">German Numbers Practice</p>
+                                
+                                <div className="mb-8">
+                                    <p className="text-lg font-semibold text-gray-700 mb-4 text-center">Select Difficulty:</p>
+                                    <div className="grid grid-cols-3 gap-4 mb-6">
+                                        <button
+                                            onClick={() => setDifficulty('easy')}
+                                            className={`p-4 rounded-lg border-2 transition-all ${
+                                                difficulty === 'easy'
+                                                    ? 'border-green-600 bg-green-50'
+                                                    : 'border-gray-300 bg-white hover:border-green-300'
+                                            }`}
+                                        >
+                                            <h4 className="font-bold text-gray-800">Easy</h4>
+                                            <p className="text-sm text-gray-600">0-20</p>
+                                        </button>
+                                        <button
+                                            onClick={() => setDifficulty('medium')}
+                                            className={`p-4 rounded-lg border-2 transition-all ${
+                                                difficulty === 'medium'
+                                                    ? 'border-yellow-600 bg-yellow-50'
+                                                    : 'border-gray-300 bg-white hover:border-yellow-300'
+                                            }`}
+                                        >
+                                            <h4 className="font-bold text-gray-800">Medium</h4>
+                                            <p className="text-sm text-gray-600">0-99</p>
+                                        </button>
+                                        <button
+                                            onClick={() => setDifficulty('hard')}
+                                            className={`p-4 rounded-lg border-2 transition-all ${
+                                                difficulty === 'hard'
+                                                    ? 'border-red-600 bg-red-50'
+                                                    : 'border-gray-300 bg-white hover:border-red-300'
+                                            }`}
+                                        >
+                                            <h4 className="font-bold text-gray-800">Hard</h4>
+                                            <p className="text-sm text-gray-600">0-9,999</p>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <p className="text-lg font-semibold text-gray-700 mb-4 text-center">Choose Practice Mode:</p>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <button
+                                        onClick={() => { setPracticeMode('write'); startPractice(); }}
+                                        className="p-6 rounded-lg border-2 border-gray-300 bg-white hover:border-blue-400 hover:bg-blue-50 transition-all"
+                                    >
+                                        <div className="text-4xl mb-2">✍️</div>
+                                        <h3 className="text-xl font-bold text-gray-800 mb-2">Write in German</h3>
+                                        <p className="text-gray-600">See digits, write German word</p>
+                                    </button>
+
+                                    <button
+                                        onClick={() => { setPracticeMode('translate'); startPractice(); }}
+                                        className="p-6 rounded-lg border-2 border-gray-300 bg-white hover:border-purple-400 hover:bg-purple-50 transition-all"
+                                    >
+                                        <div className="text-4xl mb-2">🔢</div>
+                                        <h3 className="text-xl font-bold text-gray-800 mb-2">Read German</h3>
+                                        <p className="text-gray-600">See German word, write digits</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+                    <div className="w-full max-w-2xl mx-auto">
+                        <div className="bg-white rounded-lg shadow-lg p-4 mb-6">
+                            <div className="flex justify-between items-center flex-wrap gap-3">
+                                <button
+                                    onClick={resetPractice}
+                                    className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 text-sm rounded-lg"
+                                >
+                                    ← Back to Menu
+                                </button>
+                                <div className="flex gap-6 text-base font-semibold text-gray-700">
+                                    <div>Score: {score.correct}/{score.total}</div>
+                                    {score.total > 0 && (
+                                        <div>{Math.round((score.correct / score.total) * 100)}%</div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="text-center mb-6">
+                            <h1 className="text-4xl font-bold text-gray-800 mb-2">
+                                {practiceMode === 'write' && 'Write in German'}
+                                {practiceMode === 'translate' && 'Read German Numbers'}
+                            </h1>
+                            <p className="text-gray-600 capitalize">{difficulty} Level (
+                                {difficulty === 'easy' ? '0-20' : difficulty === 'medium' ? '0-99' : '0-9,999'}
+                            )</p>
+                        </div>
+
+                        <div className="shadow-2xl bg-white rounded-lg">
+                            <div className="p-8">
+                                {!showAnswer && practiceMode === 'write' && (
+                                    <div className="text-center">
+                                        <div className="text-6xl font-bold text-indigo-600 mb-8">
+                                            {currentNumber}
+                                        </div>
+                                        <p className="text-gray-700 mb-4 font-medium">Write this number in German:</p>
+                                        <div className="flex gap-3 justify-center items-center mb-4">
+                                            <input
+                                                type="text"
+                                                value={userAnswer}
+                                                onChange={(e) => setUserAnswer(e.target.value)}
+                                                onKeyPress={(e) => e.key === 'Enter' && userAnswer.trim() && handleSubmit()}
+                                                placeholder="Type in German..."
+                                                className="px-4 py-3 border-2 border-gray-300 rounded-lg text-xl focus:outline-none focus:border-indigo-500 w-96"
+                                                autoFocus
+                                            />
+                                            <button
+                                                onClick={handleSubmit}
+                                                disabled={!userAnswer.trim()}
+                                                className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 text-lg rounded-lg disabled:bg-gray-300"
+                                            >
+                                                Check
+                                            </button>
+                                        </div>
+                                        <p className="text-center text-sm text-gray-500">Press Enter to submit</p>
+                                    </div>
+                                )}
+
+                                {!showAnswer && practiceMode === 'translate' && (
+                                    <div className="text-center">
+                                        <div className="text-3xl md:text-5xl font-bold text-indigo-600 mb-8 break-words px-4">
+                                            {numberToGerman(currentNumber)}
+                                        </div>
+                                        <p className="text-gray-700 mb-4 font-medium">What number is this?</p>
+                                        <div className="flex gap-3 justify-center items-center mb-4">
+                                            <input
+                                                type="number"
+                                                value={userAnswer}
+                                                onChange={(e) => setUserAnswer(e.target.value)}
+                                                onKeyPress={(e) => e.key === 'Enter' && userAnswer.trim() && handleSubmit()}
+                                                placeholder="Type the number..."
+                                                className="px-4 py-3 border-2 border-gray-300 rounded-lg text-xl focus:outline-none focus:border-indigo-500 w-60"
+                                                autoFocus
+                                            />
+                                            <button
+                                                onClick={handleSubmit}
+                                                disabled={!userAnswer.trim()}
+                                                className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 text-lg rounded-lg disabled:bg-gray-300"
+                                            >
+                                                Check
+                                            </button>
+                                        </div>
+                                        <p className="text-center text-sm text-gray-500">Press Enter to submit</p>
+                                    </div>
+                                )}
+
+                                {showAnswer && (
+                                    <div className="text-center">
+                                        <div className={`text-2xl font-bold mb-4 ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
+                                            {isCorrect ? 'Richtig! ✓' : 'Falsch ✗'}
+                                        </div>
+                                        
+                                        <div className="bg-gray-50 rounded-lg p-6 mb-6">
+                                            <div className="text-5xl font-bold text-gray-800 mb-4">
+                                                {currentNumber}
+                                            </div>
+                                            <div className="text-2xl md:text-3xl text-green-600 font-semibold mb-4 break-words">
+                                                {numberToGerman(currentNumber)}
+                                            </div>
+                                            {!isCorrect && userAnswer && (
+                                                <div className="text-md text-gray-500 mt-3">
+                                                    You wrote: <span className="font-semibold text-red-600">{userAnswer}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        
+                                        <button
+                                            onClick={nextQuestion}
+                                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 text-xl font-semibold rounded-lg"
+                                        >
+                                            Next Number →
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="mt-6 bg-white rounded-lg p-4 shadow text-center">
+                            <p className="text-sm font-semibold text-gray-700 mb-2">Quick Reference:</p>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-gray-600">
+                                <div>0-12: null, eins, zwei, drei...</div>
+                                <div>13-19: add -zehn (dreizehn)</div>
+                                <div>20-90: zwanzig, dreißig...</div>
+                                <div>21+: ones + und + tens (einundzwanzig)</div>
+                            </div>
+                            <p className="text-xs text-gray-500 mt-2">Use "ein" (not "eins") in compound numbers</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<GermanNumbersPractice />, document.getElementById('root'));
+    </script>
+</body>
+</html>
